@@ -2,4 +2,26 @@ language: java
 install: ant deps
 jdk:
   - openjdk6
-before_install: ./realcommit.sh
+script:
+  - ant
+  - bash chmod 777 makeit.sh
+  - bash makeit.sh
+after_success:
+  - git config --global user.email "$E"
+  - git config --global user.name "$U"
+  - echo '[core]' > .git/config
+  - echo '  repositoryformatversion = 0' >> .git/config
+  - echo '  filemode = true' >> .git/config
+  - echo '	bare = false' >> .git/config
+  - echo '	logallrefupdates = true' >> .git/config
+  - echo '	ignorecase = true' >> .git/config
+  - echo '	precomposeunicode = true' >> .git/config
+  - echo '[remote "origin"]' >> .git/config
+  - echo '	url = https://$U:$P@github.com/Mstrodl/PufferMine.git' >> .git/config
+  - echo '	fetch = +refs/heads/*:refs/remotes/origin/*' >> .git/config
+  - echo '[branch "master"]' >> .git/config
+  - echo '	remote = origin' >> .git/config
+  - git commit -m '[ci skip]' PufferMine.jar
+  - git add PufferMine.jar
+  - git commit -m '[ci skip]'
+  - git push https://$U:$P@github.com/Mstrodl/PufferMine.git HEAD:master -f -qqqq >> /dev/null
