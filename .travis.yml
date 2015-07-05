@@ -3,7 +3,6 @@ jdk:
   - openjdk6
 script:
   - ant
-  - bash chmod 777 makeit.sh
   - bash makeit.sh
 after_success:
   - git config --global user.email "$E"
