@@ -10,3 +10,4 @@ jar cfm PufferMine.jar MANIFEST.MF runner org
 
 rm -rf runner
 ant clean
+echo "Done!"
